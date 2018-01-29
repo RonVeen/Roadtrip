@@ -9,3 +9,4 @@ class RoadtripApplication
 fun main(args: Array<String>) {
     runApplication<RoadtripApplication>(*args)
 }
+
