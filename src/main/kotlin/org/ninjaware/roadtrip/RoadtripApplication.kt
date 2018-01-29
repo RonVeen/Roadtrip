@@ -1,4 +1,4 @@
-package org.ninjaware.Roadtrip
+package org.ninjaware.roadtrip
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
