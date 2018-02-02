@@ -17,24 +17,14 @@ class User() {
   @Field val vehicles: MutableList<Vehicle> = mutableListOf()
 
 
-  constructor(name: String, email: String, password: String, active: Boolean = true): this() {
-      this.id = UUIDGenerator.next()
-      this.name = name
-      this.email = email
-      this.active = true
-  }
-
-  constructor(id: String, name: String, email: String) : this() {
+  constructor(id: String, name: String, email: String, password: String, active: Boolean = true): this() {
       this.id = id
       this.name = name
       this.email = email
-      this.active = true
+      this.active = active
+      this.password = password
   }
 
-    constructor(id: String, name: String, email: String, vehicles: List<Vehicle>) : this(id, name, email) {
-        this.active = true
-        this.vehicles.addAll(vehicles)
-    }
 
 
 

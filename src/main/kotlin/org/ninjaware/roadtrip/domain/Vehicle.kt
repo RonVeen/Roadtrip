@@ -1,15 +1,18 @@
 package org.ninjaware.roadtrip.domain
 
-class Vehicle(var license: String, var description: String) {
-
-    var id = UUIDGenerator.next()
+class Vehicle() {
+    var id = ""
+    var license = ""
+    var description = ""
     var active = true
 
+    constructor(license: String, description: String, active: Boolean = true) : this()
 
-    constructor(id: String, license: String, description: String, active: Boolean = true) : this(license, description) {
-        this.description = description
-        this.license = license
-        this.active = active
+    constructor(id: String, license: String, description: String, active: Boolean = true) : this(license, description, active) {
+        this.id = id
     }
 
+
 }
+
+

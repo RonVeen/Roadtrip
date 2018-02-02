@@ -1,12 +1,9 @@
 package org.ninjaware.roadtrip.api
 
+import org.ninjaware.roadtrip.domain.User
 import org.ninjaware.roadtrip.service.UserService
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
-import java.time.LocalDate
+import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
 @RestController
@@ -17,11 +14,16 @@ class UserController(val userService: UserService) {
     fun ping() = "pong"
 
     @PostMapping
-    fun insert() : ResponseEntity<Any>{
-        val name = LocalDateTime.now().toString()
-        userService.createNewUser(name = name, email = name + "@gmail.com")
-        return ResponseEntity.ok().build()
+    fun insert(@RequestBody user: User) : ResponseEntity<Any>{
+        val result = userService.createUser(
+                name = user.name,
+                email = user.email,
+                password = user.password,
+                vehicles = user.vehicles)
+        return when(result.succes) {
+            true -> ResponseEntity.ok(result.value)
+            false -> ResponseEntity.badRequest().body(result.message)
+        }
     }
-
 }
 
