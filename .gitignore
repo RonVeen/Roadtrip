@@ -4,6 +4,7 @@
 
 
 gradle.properties
+gradle-wrapper.properties
 
 
 ### IntelliJ IDEA ###
