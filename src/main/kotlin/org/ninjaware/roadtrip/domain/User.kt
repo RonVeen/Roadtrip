@@ -9,22 +9,23 @@ import javax.validation.constraints.NotEmpty
 
 @Document(collection = "user")
 class User() {
-  @Id var id: String = UUID.randomUUID().toString()
+  @Id lateinit var id: String
   @Field @Indexed @NotEmpty lateinit var name: String
   @Field @Indexed @NotEmpty lateinit var email: String
-  @Field var counter: Int = 0
+  @Field @NotEmpty lateinit var password: String
+  @Field var active = true
+  @Field val vehicles: MutableList<Vehicle> = mutableListOf()
 
-  constructor(name: String, email: String, counter: Int = 0): this() {
-      this.name = name
-      this.email = email
-  }
 
-  constructor(id: String, name: String, email: String, counter: Int = 0) : this() {
+  constructor(id: String, name: String, email: String, password: String, active: Boolean = true): this() {
       this.id = id
       this.name = name
       this.email = email
-      this.counter = counter
+      this.active = active
+      this.password = password
   }
+
+
 
 
 
