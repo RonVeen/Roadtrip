@@ -12,6 +12,10 @@ class Result<T>(val succes: Boolean, val value: T? = null) {
         this.message = message
     }
 
+    constructor(succes: Boolean, message: String) : this(false, null) {
+        this.message = message
+    }
+
     constructor(exception: Exception) : this(false, null) {
         this.exception = exception
     }

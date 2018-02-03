@@ -10,15 +10,28 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(val userRepository: UserRepository) {
 
-    fun findById(id: String) : User? = userRepository.findById(id)?.get()
+    fun findById(id: String) : Result<Any>  {
+        val user = userRepository.findById(id)
+        return when (user.isPresent) {
+            true -> Result(user.get())
+            false -> Result("unknown user")
+        }
+    }
 
-    fun findByEmail(email: String) : User? = userRepository.findByEmail(email)
+    fun findByEmail(email: String) : Result<Any> {
+        val user = userRepository.findByEmail(email)
+        return when (user) {
+            null -> Result("unknown user")
+            else -> Result(user)
+        }
+
+    }
 
 
     fun createUser(name: String, email: String, password: String, vehicles: List<Vehicle> = emptyList()): Result<User> {
         //  Validate if email adres is unique
         val existingUser = findByEmail(email)
-        existingUser?.let {
+        if (existingUser.succes) {
             return Result("Email address is already in use")
         }
 
@@ -85,6 +98,18 @@ class UserService(val userRepository: UserRepository) {
             false -> false
             true -> {
                 current.get().password == password
+            }
+        }
+    }
+
+
+    fun removeByEmail(email: String) : Result<String> {
+        val currentUser = findByEmail(email)
+        return when(currentUser) {
+            null -> Result(succes = false, message = "Unknown user")
+            else -> {
+                userRepository.delete(currentUser.value as User)
+                Result(succes = true)
             }
         }
     }
